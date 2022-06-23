@@ -7,7 +7,7 @@ module.exports = {
 
   plugins: ["vuetify"],
 
-  extends: "vuetify",
+  extends: ["vuetify","plugin:vue/vue2-recommended", "prettier"],
 
   parserOptions: {
     parser: "babel-eslint"
