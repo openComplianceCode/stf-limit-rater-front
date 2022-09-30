@@ -7,7 +7,7 @@
     <v-row justify="center">
       <v-col
         cols="12"
-        md="8"
+        md="12"
       >
         <material-card
           color="primary"
@@ -20,35 +20,6 @@
           <v-form>
             <v-container class="py-0">
               <v-row>
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    disabled
-                    label="Company (disabled)"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    color="purple"
-                    label="User Name"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    color="purple"
-                    label="Email Address"
-                  />
-                </v-col>
 
                 <v-col
                   cols="12"
@@ -70,10 +41,21 @@
                   />
                 </v-col>
 
-                <v-col cols="12">
+                <v-col
+                  cols="12"
+                  md="6"
+                >
                   <v-text-field
                     color="purple"
-                    label="Adress"
+                    label="Email Address"
+                  />
+                </v-col>
+                <v-col
+                  cols="12"
+                  md="6"
+                >
+                  <v-text-field
+                    label="Company (Optional)"
                   />
                 </v-col>
 
@@ -104,15 +86,26 @@
                   <v-text-field
                     color="purple"
                     label="Postal Code"
-                    type="number"
+                   
                   />
                 </v-col>
+
+               
+
+                <v-col cols="12">
+                  <v-text-field
+                    color="purple"
+                    label="Address"
+                  />
+                </v-col>
+
+                
 
                 <v-col cols="12">
                   <v-textarea
                     color="purple"
                     label="About Me"
-                    value="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                    value=""
                   />
                 </v-col>
 
@@ -133,41 +126,7 @@
         </material-card>
       </v-col>
 
-      <v-col
-        cols="12"
-        md="4"
-      >
-        <app-card class="mt-4 text-center">
-          <v-img
-            class="rounded-circle elevation-6 mt-n12 d-inline-block"
-            src="https://demos.creative-tim.com/vue-material-dashboard/img/marc.aba54d65.jpg"
-            width="128"
-          />
-
-          <v-card-text class="text-center">
-            <h6 class="text-h6 mb-2 text--secondary">
-              CEO / FOUNDER
-            </h6>
-
-            <h4 class="text-h4 mb-3 text--primary">
-              John Leider
-            </h4>
-
-            <p class="text--secondary">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione dolorem deserunt veniam tempora magnam quisquam quam error iusto cupiditate ducimus, et eligendi saepe voluptatibus assumenda similique temporibus placeat animi dicta?
-            </p>
-
-            <v-btn
-              class="mr-0"
-              color="primary"
-              min-width="100"
-              rounded
-            >
-              Follow
-            </v-btn>
-          </v-card-text>
-        </app-card>
-      </v-col>
+      
     </v-row>
   </v-container>
 </template>

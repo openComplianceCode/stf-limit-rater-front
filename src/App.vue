@@ -11,7 +11,7 @@ import '@/styles/overrides.sass'
 export default {
   name: 'App',
   metaInfo: {
-    title: 'New Dis',
+    title: 'Limiter',
     titleTemplate: '%s | Material Dashboard Free',
     htmlAttrs: { lang: 'en' },
     meta: [

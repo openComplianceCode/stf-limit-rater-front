@@ -9,7 +9,7 @@
 
     <v-list-item-content class="pl-2">
       <v-list-item-title class="text-h3">
-        <strong class="mr-1 font-weight-black">OSCA</strong>
+        <strong class="mr-1 font-weight-black">Limiter</strong>
 
         <span class="primary--text"></span>
       </v-list-item-title>

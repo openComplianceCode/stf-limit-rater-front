@@ -1,5 +1,5 @@
 <template>
-  <v-container id="google-maps-view" fluid tag="section">
+  <v-container id="dashboard-login" fluid tag="section">
     <v-row>
       <v-col cols="12" md="12">
         <material-card color="green" full-header>
@@ -193,12 +193,9 @@
 import { get } from 'vuex-pathify'
 import Vue from 'vue'
 
-const lineSmooth = Vue.chartist.Interpolation.cardinal({
-  tension: 0,
-})
 
 export default {
-  name: 'GoogleMapsView',
+  name: 'DashboardLogin',
 
   data: () => ({
 
