@@ -158,7 +158,7 @@
                 </v-list-item-content>
 
                 <v-list-item-content>
-                  <v-list-item-title>1000 Per Day</v-list-item-title>
+                  <v-list-item-title>1000 Per Day {{}}</v-list-item-title>
                   <v-list-item-subtitle>Last Access IP</v-list-item-subtitle>
                 </v-list-item-content>
 

@@ -18,7 +18,6 @@ const store = new Vuex.Store({
 store.subscribe(mutation => {
   if (!mutation.type.startsWith('user/')) return
 
-  store.dispatch('user/update', mutation)
 })
 
 store.dispatch('app/init')
@@ -26,3 +25,6 @@ store.dispatch('app/init')
 export default store
 
 export const ROOT_DISPATCH = Object.freeze({ root: true })
+
+
+const axios = require("axios").default;

@@ -44,13 +44,13 @@
             <div>
               <h1 class="text-h3 text--primary">If you want to get more and seperated quota, you could login:</h1>
               <div class="text-center my-6">
-                <v-btn depressed color="primary" width="40%" :href="auth_urls.github">Continue with Github<v-icon right dark>
+                <v-btn depressed color="primary" width="40%" :href="authURL.github">Continue with Github<v-icon right dark>
                     mdi-github
                   </v-icon>
                 </v-btn>
               </div>
               <div class="text-center my-6">
-                <v-btn depressed color="primary" width="40%" :href="auth_urls.gitee">Continue with Gitee<v-icon right dark>
+                <v-btn depressed color="primary" width="40%" :href="authURL.gitee">Continue with Gitee<v-icon right dark>
                     mdi-alpha-g-circle-outline
                   </v-icon>
                 </v-btn>
@@ -67,24 +67,19 @@
 // Utilities
 
 const axios = require('axios').default;
-
+import { get } from 'vuex-pathify'
 
 export default {
   name: 'DashboardNologin',
 
   data: () => ({
-    auth_urls: {}
+    
 
   }),
-
-  mounted () {
-    axios
-      .get('/api/auth_urls')
-      .then(r => {
-          console.log(r);
-          this.auth_urls = r.data;
-          
-      })
+  computed: {
+    authURL: get("app/authURL"),
+    quota: get("app/quota"),
+    remaining: get('user/remaining')
   }
 }
 </script>

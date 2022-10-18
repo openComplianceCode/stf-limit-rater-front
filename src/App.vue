@@ -19,5 +19,9 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     ],
   },
+  created() {
+      this.$store.dispatch('app/fetch');
+      this.$store.dispatch('user/rateLimit');
+    },
 }
 </script>
