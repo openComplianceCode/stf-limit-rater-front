@@ -6,7 +6,7 @@
           <template #heading>
             <div class="pa-8 white--text">
               <div class="text-h4 font-weight-light">
-                Hi, {{login}}
+                Hi, {{ login }}
               </div>
               <div class="text-caption">
                 Nice to see your again
@@ -19,33 +19,39 @@
                 <v-list-item-icon>
                   <v-avatar size="48px">
                     <img :src="avatarUrl" />
-
                   </v-avatar>
 
                 </v-list-item-icon>
 
                 <v-list-item-content>
                   <v-list-item-title>alec-z<v-icon color="indigo" right>
-                      {{ oauthType == "Github" ? "mdi-github" : ""}}
+                      {{ oauthType == "Github" ? "mdi-github" : "" }}
                     </v-icon>
                   </v-list-item-title>
                   <v-list-item-subtitle>{{ oauthType }}'s login</v-list-item-subtitle>
                 </v-list-item-content>
 
                 <v-list-item-content>
-                  <v-list-item-title>{{quota[userInfo.role]}} Per Day</v-list-item-title>
-                  <v-list-item-subtitle>Role: {{userInfo.role}}</v-list-item-subtitle>
+                  <v-list-item-title>{{ quota[userInfo.role] * 24 }} Per Day</v-list-item-title>
+                  <v-list-item-subtitle>Role: {{ userInfo.role }}</v-list-item-subtitle>
+
+
                 </v-list-item-content>
 
                 <v-list-item-content>
                   <v-list-item-title>
                     <span style="display:inline-block; width:7ex">
-                      <span v-show="!rateLoading">{{remaining}} </span>
+                      <span v-show="!rateLoading">{{ remaining }} </span>
                       <v-icon v-show="rateLoading" color="primary">mdi-loading mdi-spin</v-icon>
                     </span>
-                    <v-btn class="ml-1" color="primary" icon small @click="refresh">
-                      <v-icon :disabled="rateLoading">mdi-cloud-refresh</v-icon>
-                    </v-btn>
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn class="ml-1" color="primary" icon small @click="refresh" v-bind="attrs" v-on="on">
+                          <v-icon :disabled="rateLoading">mdi-cloud-refresh</v-icon>
+                        </v-btn>
+                      </template>
+                      <span>Refresh will also consume 1 quota</span>
+                    </v-tooltip>
                   </v-list-item-title>
                   <v-list-item-subtitle>Quota remaining</v-list-item-subtitle>
                 </v-list-item-content>
@@ -85,19 +91,19 @@
             <v-list>
               <v-list-item>
                 <v-list-item-content>
-                  <v-list-item-title>Alec Zheng</v-list-item-title>
+                  <v-list-item-title>{{ userInfo.firstName + " " + userInfo.lastName }}</v-list-item-title>
                   <v-list-item-subtitle>Name</v-list-item-subtitle>
                 </v-list-item-content>
 
                 <v-list-item-content>
-                  <v-list-item-title>aleczheng05@gmail.com</v-list-item-title>
+                  <v-list-item-title>{{ userInfo.emailAddress }}</v-list-item-title>
                   <v-list-item-subtitle>Contact Email</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
 
               <v-list-item>
                 <v-list-item-content>
-                  <v-list-item-title>Company info</v-list-item-title>
+                  <v-list-item-title></v-list-item-title>
                   <v-list-item-subtitle>Company</v-list-item-subtitle>
                 </v-list-item-content>
 
@@ -106,8 +112,6 @@
                   <v-list-item-subtitle>City</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
-
-
               <v-list-item>
 
 
@@ -154,50 +158,66 @@
           </template>
           <v-card-text>
             <v-list>
-              <v-template v-if="apiTokenInfo.api_token_generate_time">
+              <template v-if="apiTokenInfo.api_token_generate_time">
                 <v-list-item>
                   <v-list-item-content>
-                    <v-list-item-title> {{apiTokenInfo.api_token_generate_time}}</v-list-item-title>
+                    <v-list-item-title> {{ apiTokenInfo.api_token_prefix }}...</v-list-item-title>
+                    <v-list-item-subtitle>Current Token</v-list-item-subtitle>
+                  </v-list-item-content>
+
+                  <v-list-item-content>
+                    <v-list-item-title> {{ apiTokenInfo.api_token_generate_time }}</v-list-item-title>
                     <v-list-item-subtitle>Generate Time</v-list-item-subtitle>
                   </v-list-item-content>
 
                   <v-list-item-content>
-                    <v-list-item-title>{{apiTokenInfo.access_time ? apiTokenInfo.access_time : 'Never'}}</v-list-item-title>
+                    <v-list-item-title>{{ apiTokenInfo.access_time ? apiTokenInfo.access_time : 'Never' }}
+                    </v-list-item-title>
                     <v-list-item-subtitle>Last Use Time</v-list-item-subtitle>
                   </v-list-item-content>
 
                   <v-list-item-content>
-                    <v-list-item-title>{{apiTokenInfo.ip ? apiTokenInfo.ip : 'Never'}}</v-list-item-title>
+                    <v-list-item-title>{{ apiTokenInfo.ip ? apiTokenInfo.ip : 'Never' }}</v-list-item-title>
                     <v-list-item-subtitle>Last Use IP</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
-              </v-template>
-              <v-template v-else>
+              </template>
+              <template v-else>
                 <v-list-item>
                   <v-list-item-content>
                     <v-list-item-title>No API Token</v-list-item-title>
                     <v-list-item-subtitle>Your havenot gengerated API Token</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
-              </v-template>
+              </template>
             </v-list>
             <div>
-              <h1 class="text-h5 text--primary">
-                <span v-if="newAPITokenRemain <= 0">The token won't expired until you generate new one, put it into HTTP Header Authorization</span>
-                <v-template v-else>
-                  <span color="primary">You have {{newAPITokenRemain}} seconds to save the Token: <br />
-                  {{newAPIToken}} </span>
+              <h1 class="text-h5 text--primary" style="position:relative;">
+                <transition name="apitoken">
+                  <span v-if="newAPITokenRemain <= 0" key="no_api_token">The API token won't expired until you generate
+                    new one, put it into HTTP
+                    Header Authorization</span>
+                  <v-alert type="info" key="show_api_token" v-else>
 
-                </v-template>
-                
+                    <div style="font-weight: bold;">
+                      {{ newAPITokenRemain }} seconds later to close:
+                    </div>
+                    <div style="max-width:670px;overflow-wrap:break-word;">
+                      {{ newAPIToken }} <v-icon right style="margin-left: 30px"
+                        @click="$navigator.clipboard.writeText(newAPIToken);">mdi-content-copy</v-icon>
+                    </div>
+                  </v-alert>
+                </transition>
               </h1>
               <div class="text-center my-6">
-                <v-btn depressed color="primary" width="40%" :disabled="apiTokenGenerateLoading"
-                  @click="generateAPIToken">generate new API token
+                <v-btn depressed color="primary" width="40%"
+                  :disabled="apiTokenGenerateLoading || newAPITokenRemain > 0" @click="generateAPIToken">generate new
+                  API token
                   <v-icon right v-show="!apiTokenGenerateLoading">mdi-key-plus</v-icon>
                   <v-icon right v-show="apiTokenGenerateLoading" color="primary">mdi-loading mdi-spin</v-icon>
                 </v-btn>
               </div>
+
             </div>
           </v-card-text>
         </material-card>
@@ -251,3 +271,16 @@ export default {
   }
 }
 </script>
+
+<style>
+.apitoken-enter-active,
+.apitoken-leave-active {
+  transition: opacity 1s;
+}
+
+.apitoken-enter,
+.apitoken-leave-to {
+  opacity: 0;
+  position: absolute;
+}
+</style>

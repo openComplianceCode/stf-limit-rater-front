@@ -4,7 +4,6 @@ import _ from "lodash";
 
 // Globals
 import { IN_BROWSER } from "@/util/globals";
-import store from "..";
 
 const axios = require("axios").default;
 
@@ -57,6 +56,18 @@ const actions = {
       commit("dark", window.matchMedia("(prefers-color-scheme: dark)"));
     }
   },
+  updateUserDetail: ({ commit }, userDetail) => {
+    axios
+      .post("/api/user_detail", userDetail)
+      .then(function(response) {
+        const user = response.data || {};
+        if (!_.isNil(user.id) && user.id > 0) {
+          commit("isLogin", true);
+          commit("userInfo", user);
+        }
+      })
+      .catch(error => commit("isLogin", false));
+  },
   rateLimit: ({ commit }) => {
     axios.get("/api/quota_remaining").then(r => {
       if (!_.isEmpty(r.data)) {
@@ -77,9 +88,10 @@ const actions = {
     if (state.isLogin) {
       axios.get("/api/generate_api_token").then(r => {
         commit("newAPIToken", r.data.api_token);
-        commit("newAPITokenRemain", 10);
+        commit("newAPITokenRemain", 15);
         const timer = setInterval(() => {
           if (state.newAPITokenRemain <= 0) {
+            commit("newAPIToken", "");
             clearInterval(timer);
           } else {
             commit("newAPITokenRemain", state.newAPITokenRemain - 1);
@@ -130,19 +142,4 @@ export default {
   getters
 };
 
-axios.interceptors.response.use(
-  r => {
-    const clientIP = r.headers["z-client-ip"];
-    if (!_.isEmpty(clientIP)) {
-      store.state.clientIP = r.headers["z-client-ip"];
-      store.commit("clientIP", clientIP);
-    }
-    return r;
-  },
-  r => {
-    if (r.status == "301") {
-      store.commit("isLogin", false);
-    }
-    return r;
-  }
-);
+

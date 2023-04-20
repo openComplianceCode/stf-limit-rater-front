@@ -28,3 +28,18 @@ export const ROOT_DISPATCH = Object.freeze({ root: true })
 
 
 const axios = require("axios").default;
+axios.interceptors.response.use(
+  r => {
+    const clientIP = r.headers["z-client-ip"];
+    if (!_.isEmpty(clientIP)) {
+      store.commit("user/clientIP", clientIP);
+    }
+    return r;
+  },
+  r => {
+    if (r.status == "301") {
+      store.commit("user/isLogin", false);
+    }
+    return r;
+  }
+);
